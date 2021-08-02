@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Webform Composite lists module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+use Drupal\Core\Form\FormStateInterface;
+use Stephane888\Debug\debugLog;
+
+function _WebformCompositeListsAjax(array &$form, FormStateInterface $form_state)
+{
+  // debugLog::$themeName = null;
+  // debugLog::kintDebugDrupal($form['elements']['page_1']['dans_qutement_se_situe_votre_projet']['#webform_composite_elements']['webform_composite_lists_2'], '_WebformCompositeListsAjax', null, true);
+  $Values = $form_state->getValue('dans_qutement_se_situe_votre_projet');
+  // debugLog::kintDebugDrupal($selectedValue, '$selectedValue');
+  $options = [];
+  if (! empty($Values['webform_composite_lists'])) {
+    // loadChildren($tid, $vid = null)
+    $loadChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($Values['webform_composite_lists'], 'departements');
+    // debugLog::kintDebugDrupal($loadChildren, '$loadChildren');
+    foreach ($loadChildren as $term) {
+      $options[$term->id()] = $term->get('name')->value;
+    }
+  }
+  if (isset($form['elements']['page_1']['dans_qutement_se_situe_votre_projet']['#webform_composite_elements']['webform_composite_lists_2'])) {
+    $form['elements']['page_1']['dans_qutement_se_situe_votre_projet']['#webform_composite_elements']['webform_composite_lists_2']['#options'] = $options;
+    return $form['elements']['page_1']['dans_qutement_se_situe_votre_projet']['#webform_composite_elements']['webform_composite_lists_2'];
+  }
+}

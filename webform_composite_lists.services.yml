@@ -1,0 +1,8 @@
+services:
+  webform_composite_lists.form:
+    class: Drupal\webform_composite_lists\Services\BuildFieldSelect
+    arguments: []
+    
+  webform_composite_lists.generatesummaylist:
+    class: Drupal\webform_composite_lists\Services\GenerateSummayList
+    arguments: []
