@@ -1,0 +1,4 @@
+administer webform_composite_lists configuration:
+  title: 'Administer webform_composite_lists configuration'
+  description: 'Optional description.'
+  restrict access: true
